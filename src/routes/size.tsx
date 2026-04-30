@@ -32,7 +32,8 @@ function SizePage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-12 md:py-16">
+    <div className="max-w-5xl mx-auto px-6 py-8 md:py-12">
+      <div className="mb-6"><BackButton to="/menu" variant="ghost">Back to Flavors</BackButton></div>
       <StepIndicator current={1} />
       <div className="text-center mb-12">
         <p className="text-sm font-semibold text-primary uppercase tracking-wider">Step 2</p>
@@ -70,8 +71,7 @@ function SizePage() {
         })}
       </fieldset>
 
-      <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <BackButton to="/menu">Back to Flavors</BackButton>
+      <div className="mt-12 flex items-center justify-end">
         <button
           onClick={() => nav({ to: "/toppings" })}
           className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-8 py-4 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"
