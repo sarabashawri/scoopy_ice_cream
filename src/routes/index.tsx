@@ -1,13 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Sparkles, Truck, Heart } from "lucide-react";
-import { FLAVORS } from "@/lib/order-context";
+import { FLAVORS, SIZE_PRICES, DELIVERY_MINUTES } from "@/lib/order-context";
+import { formatSAR } from "@/components/price";
 import hero from "@/assets/hero-icecream.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Scoopy — Order Your Favorite Ice Cream" },
-      { name: "description", content: "Handcrafted scoops delivered to your door in 30 minutes." },
+      { name: "description", content: "Handcrafted scoops delivered to your door in 20 minutes." },
     ],
   }),
   component: Home,
@@ -45,7 +46,7 @@ function Home() {
               </Link>
             </div>
             <div className="mt-10 flex items-center gap-8 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2"><Truck className="h-4 w-4 text-primary" /> 30-min delivery</div>
+              <div className="flex items-center gap-2"><Truck className="h-4 w-4 text-primary" /> {DELIVERY_MINUTES}-min delivery</div>
               <div className="flex items-center gap-2"><Heart className="h-4 w-4 text-primary" /> 12k happy scoopers</div>
             </div>
           </div>
@@ -86,7 +87,7 @@ function Home() {
               <div className="p-5 flex items-center justify-between">
                 <div>
                   <h3 className="font-display font-bold text-xl">{f.name}</h3>
-                  <p className="text-sm text-muted-foreground">From ${f.price.toFixed(2)}</p>
+                  <p className="text-sm text-muted-foreground">From {formatSAR(SIZE_PRICES.Small)}</p>
                 </div>
                 <span className="h-9 w-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center group-hover:rotate-45 transition-transform">
                   <ArrowRight className="h-4 w-4" />
