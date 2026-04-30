@@ -57,9 +57,21 @@ type OrderState = {
   cartTotal: () => number;
   itemPrice: (item: CartItem) => number;
 
+  // Confirmed order (persisted snapshot until user starts new order)
+  confirmedOrder: ConfirmedOrder | null;
+  confirmOrder: () => void;
+  startNewOrder: () => void;
+
   // Backwards compat (single-item review flow)
   total: () => number;
   reset: () => void;
+};
+
+export type ConfirmedOrder = {
+  orderNumber: string;
+  items: CartItem[];
+  total: number;
+  placedAt: number;
 };
 
 const Ctx = createContext<OrderState | null>(null);
