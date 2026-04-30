@@ -81,6 +81,7 @@ const initialBuilder: Builder = { flavorId: null, size: "Medium", toppings: [] }
 export function OrderProvider({ children }: { children: ReactNode }) {
   const [builder, setBuilder] = useState<Builder>(initialBuilder);
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [confirmedOrder, setConfirmedOrder] = useState<ConfirmedOrder | null>(null);
 
   const flavor = builder.flavorId ? FLAVORS.find((f) => f.id === builder.flavorId) ?? null : null;
 
@@ -139,6 +140,25 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     setCart([]);
   };
 
+  const confirmOrder = () => {
+    if (cart.length === 0) return;
+    const orderNumber = `SC-${Math.floor(Math.random() * 9000) + 1000}`;
+    setConfirmedOrder({
+      orderNumber,
+      items: cart,
+      total: cart.reduce((s, it) => s + itemPrice(it), 0),
+      placedAt: Date.now(),
+    });
+    setCart([]);
+    resetBuilder();
+  };
+
+  const startNewOrder = () => {
+    setConfirmedOrder(null);
+    resetBuilder();
+    setCart([]);
+  };
+
   return (
     <Ctx.Provider
       value={{
@@ -157,6 +177,9 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         changeQty,
         cartTotal,
         itemPrice,
+        confirmedOrder,
+        confirmOrder,
+        startNewOrder,
         total,
         reset,
       }}
