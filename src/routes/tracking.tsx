@@ -15,11 +15,11 @@ export const Route = createFileRoute("/tracking")({
 });
 
 const STAGES = [
-  { id: 0, label: "Order Confirmed", ar: "تم تأكيد الطلب", Icon: Check },
-  { id: 1, label: "Preparing", ar: "قيد التحضير", Icon: ChefHat },
-  { id: 2, label: "Out for Delivery", ar: "في الطريق", Icon: Bike },
-  { id: 3, label: "Arriving Soon", ar: "يصل قريباً", Icon: MapPin },
-  { id: 4, label: "Delivered", ar: "تم التوصيل", Icon: PackageCheck },
+  { id: 0, label: "Order Confirmed", Icon: Check },
+  { id: 1, label: "Preparing", Icon: ChefHat },
+  { id: 2, label: "Out for Delivery", Icon: Bike },
+  { id: 3, label: "Arriving Soon", Icon: MapPin },
+  { id: 4, label: "Delivered", Icon: PackageCheck },
 ];
 
 function Tracking() {
@@ -62,7 +62,7 @@ function Tracking() {
         </span>
         <p className="mt-4 text-xs font-semibold text-primary uppercase tracking-wider">Current Status</p>
         <h2 className="mt-1 font-display text-3xl font-black">{current.label}</h2>
-        <p className="mt-1 text-muted-foreground" dir="rtl">{current.ar}</p>
+        
 
         {/* Progress bar */}
         <div className="mt-8">
@@ -105,7 +105,7 @@ function Tracking() {
               </span>
               <div className="flex-1">
                 <p className={`font-semibold ${active ? "text-foreground" : ""}`}>{s.label}</p>
-                <p className="text-xs text-muted-foreground" dir="rtl">{s.ar}</p>
+                
               </div>
               {done && <span className="text-xs font-semibold text-primary">Done</span>}
               {active && <span className="text-xs font-semibold text-primary">In progress</span>}
