@@ -15,8 +15,30 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { confirmedOrder } = useOrder();
   return (
     <div>
+      {confirmedOrder && (
+        <div className="max-w-7xl mx-auto px-6 pt-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-pink-soft/60 ring-1 ring-primary/20 rounded-2xl px-5 py-4 shadow-[var(--shadow-card)]">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <Truck className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="font-semibold">Your order is on the way</p>
+                <p className="text-xs text-muted-foreground">Order #{confirmedOrder.orderNumber} · ETA {DELIVERY_MINUTES} min</p>
+              </div>
+            </div>
+            <Link
+              to="/tracking"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"
+            >
+              Track My Order <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      )}
       {/* Hero */}
       <section className="max-w-7xl mx-auto px-6 pt-12 md:pt-20 pb-16">
         <div className="grid md:grid-cols-2 gap-10 items-center">
