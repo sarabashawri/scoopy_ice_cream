@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Sparkles, Truck, Heart } from "lucide-react";
-import { FLAVORS, SIZE_PRICES, DELIVERY_MINUTES } from "@/lib/order-context";
+import { FLAVORS, SIZE_PRICES, DELIVERY_MINUTES, useOrder } from "@/lib/order-context";
 import { formatSAR } from "@/components/price";
 import hero from "@/assets/hero-icecream.jpg";
 
