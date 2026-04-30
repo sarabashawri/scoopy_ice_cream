@@ -26,7 +26,8 @@ A web application that helps users order ice cream quickly and easily through a 
 
 ## Team
 - [Ghala Mansour](PUT_GITHUB_LINK_HERE)
-- [Sara Bashawri](PUT_GITHUB_LINK_HERE)
+- [Sara Bashawri](https://github.com/sarabashawri)
 - [Farah Alhazmi](PUT_GITHUB_LINK_HERE)
-- [Yara Alsiamy](PUT_GITHUB_LINK_HERE)
+- [Yara Alsiamy](https://github.com/yaraalsiamy1)
 - [Ayah Badr](PUT_GITHUB_LINK_HERE)
+
