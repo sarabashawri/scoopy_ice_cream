@@ -13,7 +13,7 @@ export const Route = createFileRoute("/toppings")({
 });
 
 function ToppingsPage() {
-  const { flavor, toppings, toggleTopping } = useOrder();
+  const { flavor, toppings, toggleTopping, addBuilderToCart } = useOrder();
   const nav = useNavigate();
 
   if (!flavor) {
@@ -72,10 +72,13 @@ function ToppingsPage() {
 
       <div className="mt-12 flex items-center justify-end">
         <button
-          onClick={() => nav({ to: "/review" })}
+          onClick={() => {
+            addBuilderToCart();
+            nav({ to: "/cart" });
+          }}
           className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-8 py-4 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"
         >
-          Review Order <ArrowRight className="h-4 w-4" />
+          Review & Cart <ArrowRight className="h-4 w-4" />
         </button>
       </div>
     </div>

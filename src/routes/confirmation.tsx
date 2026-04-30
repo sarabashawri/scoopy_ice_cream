@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Check, Truck, Clock, Home } from "lucide-react";
+import { Check, Truck, Clock, Home, Sparkles } from "lucide-react";
 import { DELIVERY_MINUTES, useOrder } from "@/lib/order-context";
 
 export const Route = createFileRoute("/confirmation")({
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/confirmation")({
 });
 
 function Confirmation() {
-  const { confirmedOrder } = useOrder();
+  const { confirmedOrder, startNewOrder } = useOrder();
   const nav = useNavigate();
 
   return (
@@ -40,6 +40,12 @@ function Confirmation() {
           className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-7 py-3.5 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"
         >
           <Truck className="h-4 w-4" /> Track My Order
+        </button>
+        <button
+          onClick={() => { startNewOrder(); nav({ to: "/menu" }); }}
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-card px-7 py-3.5 font-semibold text-foreground hover:bg-muted shadow-[var(--shadow-card)] ring-1 ring-border"
+        >
+          <Sparkles className="h-4 w-4" /> Start New Order
         </button>
         <Link to="/" className="inline-flex items-center justify-center gap-2 rounded-full bg-card px-7 py-3.5 font-semibold text-foreground hover:bg-muted shadow-[var(--shadow-card)] ring-1 ring-border">
           <Home className="h-4 w-4" /> Back to Home

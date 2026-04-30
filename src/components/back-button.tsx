@@ -11,14 +11,14 @@ type Props = {
 export function BackButton({ to, children = "Back", variant = "solid" }: Props) {
   const styles =
     variant === "ghost"
-      ? "bg-card text-foreground hover:bg-muted ring-1 ring-border"
-      : "bg-foreground text-background hover:opacity-90 ring-2 ring-foreground/10";
+      ? "bg-card text-primary hover:bg-primary hover:text-primary-foreground ring-2 ring-primary/20"
+      : "bg-primary text-primary-foreground hover:opacity-90 ring-2 ring-primary/20 shadow-md";
   return (
     <Link
       to={to}
-      className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition shadow-[var(--shadow-card)] ${styles}`}
+      className={`inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-base font-bold transition-all shadow-[var(--shadow-card)] hover:-translate-y-0.5 ${styles}`}
     >
-      <ArrowLeft className="h-4 w-4" />
+      <ArrowLeft className="h-5 w-5" />
       {children}
     </Link>
   );

@@ -4,7 +4,7 @@ const steps = [
   { label: "Flavor" },
   { label: "Size" },
   { label: "Toppings" },
-  { label: "Review" },
+  { label: "Cart" },
 ] as const;
 
 export function StepIndicator({ current }: { current: number }) {

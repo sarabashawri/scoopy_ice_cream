@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrackingRouteImport } from './routes/tracking'
 import { Route as ToppingsRouteImport } from './routes/toppings'
 import { Route as SizeRouteImport } from './routes/size'
-import { Route as ReviewRouteImport } from './routes/review'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ConfirmationRouteImport } from './routes/confirmation'
@@ -33,11 +32,6 @@ const ToppingsRoute = ToppingsRouteImport.update({
 const SizeRoute = SizeRouteImport.update({
   id: '/size',
   path: '/size',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReviewRoute = ReviewRouteImport.update({
-  id: '/review',
-  path: '/review',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MenuRoute = MenuRouteImport.update({
@@ -78,7 +72,6 @@ export interface FileRoutesByFullPath {
   '/confirmation': typeof ConfirmationRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
-  '/review': typeof ReviewRoute
   '/size': typeof SizeRoute
   '/toppings': typeof ToppingsRoute
   '/tracking': typeof TrackingRoute
@@ -90,7 +83,6 @@ export interface FileRoutesByTo {
   '/confirmation': typeof ConfirmationRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
-  '/review': typeof ReviewRoute
   '/size': typeof SizeRoute
   '/toppings': typeof ToppingsRoute
   '/tracking': typeof TrackingRoute
@@ -103,7 +95,6 @@ export interface FileRoutesById {
   '/confirmation': typeof ConfirmationRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
-  '/review': typeof ReviewRoute
   '/size': typeof SizeRoute
   '/toppings': typeof ToppingsRoute
   '/tracking': typeof TrackingRoute
@@ -117,7 +108,6 @@ export interface FileRouteTypes {
     | '/confirmation'
     | '/contact'
     | '/menu'
-    | '/review'
     | '/size'
     | '/toppings'
     | '/tracking'
@@ -129,7 +119,6 @@ export interface FileRouteTypes {
     | '/confirmation'
     | '/contact'
     | '/menu'
-    | '/review'
     | '/size'
     | '/toppings'
     | '/tracking'
@@ -141,7 +130,6 @@ export interface FileRouteTypes {
     | '/confirmation'
     | '/contact'
     | '/menu'
-    | '/review'
     | '/size'
     | '/toppings'
     | '/tracking'
@@ -154,7 +142,6 @@ export interface RootRouteChildren {
   ConfirmationRoute: typeof ConfirmationRoute
   ContactRoute: typeof ContactRoute
   MenuRoute: typeof MenuRoute
-  ReviewRoute: typeof ReviewRoute
   SizeRoute: typeof SizeRoute
   ToppingsRoute: typeof ToppingsRoute
   TrackingRoute: typeof TrackingRoute
@@ -181,13 +168,6 @@ declare module '@tanstack/react-router' {
       path: '/size'
       fullPath: '/size'
       preLoaderRoute: typeof SizeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/review': {
-      id: '/review'
-      path: '/review'
-      fullPath: '/review'
-      preLoaderRoute: typeof ReviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/menu': {
@@ -242,7 +222,6 @@ const rootRouteChildren: RootRouteChildren = {
   ConfirmationRoute: ConfirmationRoute,
   ContactRoute: ContactRoute,
   MenuRoute: MenuRoute,
-  ReviewRoute: ReviewRoute,
   SizeRoute: SizeRoute,
   ToppingsRoute: ToppingsRoute,
   TrackingRoute: TrackingRoute,
