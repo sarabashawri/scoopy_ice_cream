@@ -26,7 +26,8 @@ function ToppingsPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
+    <div className="max-w-3xl mx-auto px-6 py-8 md:py-12">
+      <div className="mb-6"><BackButton to="/size" variant="ghost">Back to Size</BackButton></div>
       <StepIndicator current={2} />
       <div className="text-center mb-12">
         <p className="text-sm font-semibold text-primary uppercase tracking-wider">Step 3</p>
@@ -69,8 +70,7 @@ function ToppingsPage() {
         })}
       </fieldset>
 
-      <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <BackButton to="/size">Back to Size</BackButton>
+      <div className="mt-12 flex items-center justify-end">
         <button
           onClick={() => nav({ to: "/review" })}
           className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-8 py-4 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"

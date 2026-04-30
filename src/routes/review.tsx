@@ -3,7 +3,8 @@ import { useOrder, TOPPINGS, SIZE_PRICES, DELIVERY_MINUTES, TOPPING_PRICE } from
 import { formatSAR } from "@/components/price";
 import { StepIndicator } from "@/components/step-indicator";
 import { BackButton } from "@/components/back-button";
-import { Check, Clock, Truck } from "lucide-react";
+import { Check, Clock, Truck, Pencil } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export const Route = createFileRoute("/review")({
   head: () => ({
@@ -33,7 +34,8 @@ function Review() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
+    <div className="max-w-3xl mx-auto px-6 py-8 md:py-12">
+      <div className="mb-6"><BackButton to="/toppings" variant="ghost">Back to Toppings</BackButton></div>
       <StepIndicator current={3} />
       <div className="text-center mb-10">
         <p className="text-sm font-semibold text-primary uppercase tracking-wider">Step 4</p>
@@ -91,8 +93,21 @@ function Review() {
         </div>
       </div>
 
-      <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-between">
-        <BackButton to="/toppings">Edit Order</BackButton>
+      <div className="mt-8 flex items-center justify-between gap-3">
+        <TooltipProvider delayDuration={200}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                to="/toppings"
+                aria-label="Edit Order"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-card text-foreground hover:bg-muted shadow-[var(--shadow-card)] ring-1 ring-border transition"
+              >
+                <Pencil className="h-4 w-4" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>Edit Order</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <button
           onClick={confirm}
           className="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-8 py-3.5 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"
