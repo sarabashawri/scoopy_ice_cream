@@ -110,9 +110,8 @@ function Tracking() {
         })}
       </ol>
 
-      <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-between">
-        <BackButton to="/">Back to Home</BackButton>
-        <Link to="/menu" className="inline-flex items-center justify-center rounded-full bg-card px-7 py-3.5 font-semibold text-foreground hover:bg-muted shadow-[var(--shadow-card)]">
+      <div className="mt-10 flex justify-end">
+        <Link to="/menu" className="inline-flex items-center justify-center rounded-full bg-card px-7 py-3.5 font-semibold text-foreground hover:bg-muted shadow-[var(--shadow-card)] ring-1 ring-border">
           Order Another
         </Link>
       </div>
