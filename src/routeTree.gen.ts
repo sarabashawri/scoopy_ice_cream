@@ -9,8 +9,56 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ToppingsRouteImport } from './routes/toppings'
+import { Route as SizeRouteImport } from './routes/size'
+import { Route as ReviewRouteImport } from './routes/review'
+import { Route as MenuRouteImport } from './routes/menu'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ConfirmationRouteImport } from './routes/confirmation'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ToppingsRoute = ToppingsRouteImport.update({
+  id: '/toppings',
+  path: '/toppings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SizeRoute = SizeRouteImport.update({
+  id: '/size',
+  path: '/size',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewRoute = ReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MenuRoute = MenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfirmationRoute = ConfirmationRouteImport.update({
+  id: '/confirmation',
+  path: '/confirmation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +67,144 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/cart': typeof CartRoute
+  '/confirmation': typeof ConfirmationRoute
+  '/contact': typeof ContactRoute
+  '/menu': typeof MenuRoute
+  '/review': typeof ReviewRoute
+  '/size': typeof SizeRoute
+  '/toppings': typeof ToppingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/cart': typeof CartRoute
+  '/confirmation': typeof ConfirmationRoute
+  '/contact': typeof ContactRoute
+  '/menu': typeof MenuRoute
+  '/review': typeof ReviewRoute
+  '/size': typeof SizeRoute
+  '/toppings': typeof ToppingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/cart': typeof CartRoute
+  '/confirmation': typeof ConfirmationRoute
+  '/contact': typeof ContactRoute
+  '/menu': typeof MenuRoute
+  '/review': typeof ReviewRoute
+  '/size': typeof SizeRoute
+  '/toppings': typeof ToppingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/confirmation'
+    | '/contact'
+    | '/menu'
+    | '/review'
+    | '/size'
+    | '/toppings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/confirmation'
+    | '/contact'
+    | '/menu'
+    | '/review'
+    | '/size'
+    | '/toppings'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/confirmation'
+    | '/contact'
+    | '/menu'
+    | '/review'
+    | '/size'
+    | '/toppings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CartRoute: typeof CartRoute
+  ConfirmationRoute: typeof ConfirmationRoute
+  ContactRoute: typeof ContactRoute
+  MenuRoute: typeof MenuRoute
+  ReviewRoute: typeof ReviewRoute
+  SizeRoute: typeof SizeRoute
+  ToppingsRoute: typeof ToppingsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/toppings': {
+      id: '/toppings'
+      path: '/toppings'
+      fullPath: '/toppings'
+      preLoaderRoute: typeof ToppingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/size': {
+      id: '/size'
+      path: '/size'
+      fullPath: '/size'
+      preLoaderRoute: typeof SizeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review': {
+      id: '/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof ReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/menu': {
+      id: '/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof MenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirmation': {
+      id: '/confirmation'
+      path: '/confirmation'
+      fullPath: '/confirmation'
+      preLoaderRoute: typeof ConfirmationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +217,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CartRoute: CartRoute,
+  ConfirmationRoute: ConfirmationRoute,
+  ContactRoute: ContactRoute,
+  MenuRoute: MenuRoute,
+  ReviewRoute: ReviewRoute,
+  SizeRoute: SizeRoute,
+  ToppingsRoute: ToppingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
