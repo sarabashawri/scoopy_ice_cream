@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
-import { FLAVORS, useOrder } from "@/lib/order-context";
+import { FLAVORS, useOrder, SIZE_PRICES } from "@/lib/order-context";
+import { formatSAR } from "@/components/price";
 import { StepIndicator } from "@/components/step-indicator";
 
 export const Route = createFileRoute("/menu")({
@@ -47,14 +48,14 @@ function Menu() {
               <div className="p-5">
                 <div className="flex items-center justify-between">
                   <h3 className="font-display font-bold text-2xl">{f.name}</h3>
-                  <span className="text-lg font-bold text-primary">${f.price.toFixed(2)}</span>
+                  <span className="text-base font-bold text-primary">From {formatSAR(SIZE_PRICES.Small)}</span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-1">Slow-churned · 100% natural</p>
                 <button
                   onClick={() => pick(f)}
                   className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-full bg-foreground text-background py-3 text-sm font-semibold hover:opacity-90 transition"
                 >
-                  <Plus className="h-4 w-4" /> Add to Cart
+                  <Plus className="h-4 w-4" /> Choose Flavor
                 </button>
               </div>
             </article>

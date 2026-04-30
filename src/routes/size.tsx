@@ -1,7 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { useOrder, SIZE_PRICES, Size } from "@/lib/order-context";
+import { formatSAR } from "@/components/price";
 import { StepIndicator } from "@/components/step-indicator";
+import { BackButton } from "@/components/back-button";
 
 export const Route = createFileRoute("/size")({
   head: () => ({
@@ -58,19 +60,18 @@ function SizePage() {
                 className="sr-only"
               />
               <div className={`mx-auto rounded-full bg-pink-soft ${s.diameter} flex items-center justify-center mb-4`}>
-                <div className={`rounded-full bg-primary ${s.diameter} scale-75 opacity-90`} style={{ background: flavor.color }} />
+                <div className={`rounded-full ${s.diameter} scale-75 opacity-90`} style={{ background: flavor.color }} />
               </div>
               <h3 className="font-display text-2xl font-bold">{s.id}</h3>
               <p className="text-sm text-muted-foreground mt-1">{s.scoops}</p>
-              <p className="mt-3 font-semibold text-primary">
-                {SIZE_PRICES[s.id] === 0 ? "Included" : `+$${SIZE_PRICES[s.id].toFixed(2)}`}
-              </p>
+              <p className="mt-3 font-semibold text-primary">{formatSAR(SIZE_PRICES[s.id])}</p>
             </label>
           );
         })}
       </fieldset>
 
-      <div className="mt-12 flex justify-center">
+      <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <BackButton to="/menu">Back to Flavors</BackButton>
         <button
           onClick={() => nav({ to: "/toppings" })}
           className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-8 py-4 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"

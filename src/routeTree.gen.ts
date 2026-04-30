@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrackingRouteImport } from './routes/tracking'
 import { Route as ToppingsRouteImport } from './routes/toppings'
 import { Route as SizeRouteImport } from './routes/size'
 import { Route as ReviewRouteImport } from './routes/review'
@@ -19,6 +20,11 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TrackingRoute = TrackingRouteImport.update({
+  id: '/tracking',
+  path: '/tracking',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToppingsRoute = ToppingsRouteImport.update({
   id: '/toppings',
   path: '/toppings',
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/review': typeof ReviewRoute
   '/size': typeof SizeRoute
   '/toppings': typeof ToppingsRoute
+  '/tracking': typeof TrackingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/review': typeof ReviewRoute
   '/size': typeof SizeRoute
   '/toppings': typeof ToppingsRoute
+  '/tracking': typeof TrackingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/review': typeof ReviewRoute
   '/size': typeof SizeRoute
   '/toppings': typeof ToppingsRoute
+  '/tracking': typeof TrackingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/review'
     | '/size'
     | '/toppings'
+    | '/tracking'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/review'
     | '/size'
     | '/toppings'
+    | '/tracking'
   id:
     | '__root__'
     | '/'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/review'
     | '/size'
     | '/toppings'
+    | '/tracking'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,10 +157,18 @@ export interface RootRouteChildren {
   ReviewRoute: typeof ReviewRoute
   SizeRoute: typeof SizeRoute
   ToppingsRoute: typeof ToppingsRoute
+  TrackingRoute: typeof TrackingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tracking': {
+      id: '/tracking'
+      path: '/tracking'
+      fullPath: '/tracking'
+      preLoaderRoute: typeof TrackingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/toppings': {
       id: '/toppings'
       path: '/toppings'
@@ -225,6 +245,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReviewRoute: ReviewRoute,
   SizeRoute: SizeRoute,
   ToppingsRoute: ToppingsRoute,
+  TrackingRoute: TrackingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
