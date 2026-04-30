@@ -1,7 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useOrder, TOPPINGS, SIZE_PRICES } from "@/lib/order-context";
+import { useOrder, TOPPINGS, SIZE_PRICES, DELIVERY_MINUTES, TOPPING_PRICE } from "@/lib/order-context";
+import { formatSAR } from "@/components/price";
 import { StepIndicator } from "@/components/step-indicator";
-import { Check } from "lucide-react";
+import { BackButton } from "@/components/back-button";
+import { Check, Clock, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/review")({
   head: () => ({
@@ -11,7 +13,7 @@ export const Route = createFileRoute("/review")({
 });
 
 function Review() {
-  const { flavor, size, toppings, total } = useOrder();
+  const { flavor, size, toppings, total, addBuilderToCart } = useOrder();
   const nav = useNavigate();
 
   if (!flavor) {
@@ -24,6 +26,11 @@ function Review() {
   }
 
   const selectedToppings = toppings.map((id) => TOPPINGS.find((t) => t.id === id)!);
+
+  const confirm = () => {
+    addBuilderToCart();
+    nav({ to: "/confirmation" });
+  };
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
@@ -62,25 +69,32 @@ function Review() {
         </div>
 
         <div className="bg-cream/50 px-6 py-5 space-y-2 text-sm">
-          <div className="flex justify-between"><span className="text-muted-foreground">{flavor.name}</span><span>${flavor.price.toFixed(2)}</span></div>
-          <div className="flex justify-between"><span className="text-muted-foreground">{size} size</span><span>${SIZE_PRICES[size].toFixed(2)}</span></div>
+          <div className="flex justify-between"><span className="text-muted-foreground">{size} {flavor.name}</span><span>{formatSAR(SIZE_PRICES[size])}</span></div>
           {selectedToppings.map((t) => (
-            <div key={t.id} className="flex justify-between"><span className="text-muted-foreground">{t.name}</span><span>${t.price.toFixed(2)}</span></div>
+            <div key={t.id} className="flex justify-between"><span className="text-muted-foreground">{t.name}</span><span>{formatSAR(TOPPING_PRICE)}</span></div>
           ))}
+        </div>
+
+        <div className="px-6 py-5 border-t border-border flex items-center gap-3 bg-blue-soft/40">
+          <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-card text-primary shadow-[var(--shadow-card)]">
+            <Truck className="h-5 w-5" />
+          </span>
+          <div className="flex-1">
+            <p className="font-semibold flex items-center gap-1.5"><Clock className="h-4 w-4" /> Estimated delivery</p>
+            <p className="text-sm text-muted-foreground">Arrives in about {DELIVERY_MINUTES} minutes</p>
+          </div>
         </div>
 
         <div className="px-6 py-6 flex items-center justify-between border-t border-border">
           <span className="font-display text-xl font-bold">Total</span>
-          <span className="font-display text-4xl font-black text-primary">${total().toFixed(2)}</span>
+          <span className="font-display text-4xl font-black text-primary">{formatSAR(total())}</span>
         </div>
       </div>
 
       <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-between">
-        <Link to="/toppings" className="inline-flex items-center justify-center rounded-full bg-card px-6 py-3.5 font-semibold text-foreground hover:bg-muted shadow-[var(--shadow-card)]">
-          ← Edit
-        </Link>
+        <BackButton to="/toppings">Edit Order</BackButton>
         <button
-          onClick={() => nav({ to: "/confirmation" })}
+          onClick={confirm}
           className="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-8 py-3.5 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"
         >
           Confirm Order
