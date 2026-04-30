@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ShoppingBag, ArrowRight, Minus, Plus, Trash2, Clock } from "lucide-react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { ShoppingBag, ArrowRight, Minus, Plus, Trash2, Clock, Truck, Check, Sparkles } from "lucide-react";
 import { useOrder, TOPPINGS, SIZE_PRICES, FLAVORS, DELIVERY_MINUTES, Size, getFlavor, TOPPING_PRICE } from "@/lib/order-context";
 import { formatSAR } from "@/components/price";
 import { BackButton } from "@/components/back-button";
@@ -14,25 +14,103 @@ export const Route = createFileRoute("/cart")({
 const SIZES: Size[] = ["Small", "Medium", "Large"];
 
 function Cart() {
-  const { cart, updateItem, changeQty, removeItem, cartTotal, itemPrice } = useOrder();
+  const { cart, updateItem, changeQty, removeItem, cartTotal, itemPrice, confirmOrder, confirmedOrder, startNewOrder } = useOrder();
+  const nav = useNavigate();
 
-  if (cart.length === 0) {
+  // If an order is already confirmed and there is nothing in the active cart,
+  // show the confirmed order summary (do not reset or push back into the flow).
+  if (confirmedOrder && cart.length === 0) {
     return (
-      <div className="max-w-2xl mx-auto px-6 py-24 text-center">
-        <span className="inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-pink-soft text-primary mb-6">
-          <ShoppingBag className="h-9 w-9" />
-        </span>
-        <h1 className="font-display text-4xl md:text-5xl font-black">Your cart is empty</h1>
-        <p className="mt-3 text-muted-foreground">Pick a flavor and start building your perfect cone.</p>
-        <Link to="/menu" className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-7 py-3.5 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]">
-          Browse Menu <ArrowRight className="h-4 w-4" />
-        </Link>
+      <div className="max-w-3xl mx-auto px-6 py-8 md:py-12">
+        <div className="mb-6"><BackButton to="/" variant="ghost">Back to Home</BackButton></div>
+        <div className="text-center mb-8">
+          <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[var(--shadow-soft)]">
+            <Check className="h-8 w-8" strokeWidth={3} />
+          </span>
+          <h1 className="mt-5 font-display text-4xl md:text-5xl font-black">Your Order is Confirmed</h1>
+          <p className="mt-2 text-muted-foreground">Order #{confirmedOrder.orderNumber}</p>
+        </div>
+
+        <div className="bg-card rounded-3xl shadow-[var(--shadow-card)] overflow-hidden">
+          <ul className="divide-y divide-border">
+            {confirmedOrder.items.map((item) => {
+              const f = getFlavor(item.flavorId)!;
+              const tNames = item.toppings.map((id) => TOPPINGS.find((t) => t.id === id)?.name).filter(Boolean).join(", ");
+              return (
+                <li key={item.id} className="flex gap-4 p-5">
+                  <img src={f.image} alt={f.name} className="h-20 w-20 rounded-2xl object-cover" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-display font-bold text-lg">{f.name}</p>
+                    <p className="text-sm text-muted-foreground">{item.size} · Qty {item.quantity}</p>
+                    {tNames && <p className="text-xs text-muted-foreground mt-1">Toppings: {tNames}</p>}
+                  </div>
+                  <p className="font-bold text-primary">{formatSAR(itemPrice(item))}</p>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="bg-blue-soft/40 px-6 py-4 flex items-center gap-3 border-t border-border">
+            <Truck className="h-5 w-5 text-primary" />
+            <p className="text-sm"><span className="font-semibold">Estimated delivery</span> · {DELIVERY_MINUTES} minutes</p>
+          </div>
+          <div className="px-6 py-5 flex items-center justify-between border-t border-border">
+            <span className="font-display text-xl font-bold">Total</span>
+            <span className="font-display text-3xl font-black text-primary">{formatSAR(confirmedOrder.total)}</span>
+          </div>
+        </div>
+
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-between">
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-card px-7 py-3.5 font-semibold text-foreground hover:bg-muted shadow-[var(--shadow-card)] ring-1 ring-border"
+          >
+            Back to Home
+          </Link>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={() => { startNewOrder(); nav({ to: "/menu" }); }}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-card px-6 py-3.5 font-semibold text-foreground hover:bg-pink-soft shadow-[var(--shadow-card)] ring-1 ring-border"
+            >
+              <Sparkles className="h-4 w-4" /> Start New Order
+            </button>
+            <Link
+              to="/tracking"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-7 py-3.5 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"
+            >
+              <Truck className="h-4 w-4" /> Track My Order
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
 
+  if (cart.length === 0) {
+    return (
+      <div className="max-w-2xl mx-auto px-6 py-8 md:py-12">
+        <div className="mb-6"><BackButton to="/" variant="ghost">Back to Home</BackButton></div>
+        <div className="text-center pt-10">
+          <span className="inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-pink-soft text-primary mb-6">
+            <ShoppingBag className="h-9 w-9" />
+          </span>
+          <h1 className="font-display text-4xl md:text-5xl font-black">Your cart is empty</h1>
+          <p className="mt-3 text-muted-foreground">Pick a flavor and start building your perfect cone.</p>
+          <Link to="/menu" className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-7 py-3.5 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]">
+            Browse Menu <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const handleCheckout = () => {
+    confirmOrder();
+    nav({ to: "/confirmation" });
+  };
+
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 md:py-16">
+    <div className="max-w-4xl mx-auto px-6 py-8 md:py-12">
+      <div className="mb-6"><BackButton to="/menu" variant="ghost">Back to Menu</BackButton></div>
       <h1 className="font-display text-4xl md:text-5xl font-black mb-2">Your Cart</h1>
       <p className="text-muted-foreground mb-8">Edit flavor, size, toppings, and quantity below.</p>
 
@@ -171,13 +249,18 @@ function Cart() {
           <span className="font-display text-4xl font-black text-primary">{formatSAR(cartTotal())}</span>
         </div>
         <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-between">
-          <BackButton to="/menu">Add More</BackButton>
           <Link
-            to="/confirmation"
+            to="/menu"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-card px-6 py-3.5 font-semibold text-foreground hover:bg-pink-soft shadow-[var(--shadow-card)] ring-1 ring-border"
+          >
+            Add More <Plus className="h-4 w-4" />
+          </Link>
+          <button
+            onClick={handleCheckout}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-8 py-3.5 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"
           >
             Checkout <ArrowRight className="h-4 w-4" />
-          </Link>
+          </button>
         </div>
       </div>
     </div>
