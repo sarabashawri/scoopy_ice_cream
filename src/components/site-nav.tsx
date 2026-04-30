@@ -1,14 +1,18 @@
 import { Link } from "@tanstack/react-router";
 import { IceCream, ShoppingBag } from "lucide-react";
+import { useOrder } from "@/lib/order-context";
 
 const links = [
   { to: "/", label: "Home" },
   { to: "/menu", label: "Menu" },
+  { to: "/tracking", label: "Track" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
 export function SiteNav() {
+  const { cart } = useOrder();
+  const count = cart.reduce((s, i) => s + i.quantity, 0);
   return (
     <header className="sticky top-0 z-40 backdrop-blur-xl bg-background/70 border-b border-border/60">
       <nav className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between py-4">
@@ -35,10 +39,15 @@ export function SiteNav() {
         <Link
           to="/cart"
           activeProps={{ className: "ring-2 ring-primary/40" }}
-          className="inline-flex items-center gap-2 rounded-full bg-foreground text-background px-4 py-2.5 text-sm font-semibold hover:opacity-90 transition shadow-[var(--shadow-card)]"
+          className="relative inline-flex items-center gap-2 rounded-full bg-foreground text-background px-4 py-2.5 text-sm font-semibold hover:opacity-90 transition shadow-[var(--shadow-card)]"
         >
           <ShoppingBag className="h-4 w-4" />
           Cart
+          {count > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-black px-1.5 ring-2 ring-background">
+              {count}
+            </span>
+          )}
         </Link>
       </nav>
     </header>
