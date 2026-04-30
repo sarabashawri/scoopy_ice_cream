@@ -29,7 +29,7 @@ function Review() {
 
   const confirm = () => {
     addBuilderToCart();
-    nav({ to: "/confirmation" });
+    nav({ to: "/cart" });
   };
 
   return (
@@ -97,7 +97,7 @@ function Review() {
           onClick={confirm}
           className="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-8 py-3.5 font-semibold hover:opacity-90 shadow-[var(--shadow-soft)]"
         >
-          Confirm Order
+          Place Order
         </button>
       </div>
     </div>
