@@ -24,7 +24,7 @@ const STAGES = [
 
 function Tracking() {
   const [stage, setStage] = useState(0);
-  const { reset } = useOrder();
+  const { confirmedOrder } = useOrder();
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -33,25 +33,21 @@ function Tracking() {
     return () => clearInterval(id);
   }, []);
 
-  // Reset cart when fully delivered
-  useEffect(() => {
-    if (stage === STAGES.length - 1) {
-      const t = setTimeout(() => reset(), 4000);
-      return () => clearTimeout(t);
-    }
-  }, [stage, reset]);
-
   const progress = (stage / (STAGES.length - 1)) * 100;
   const current = STAGES[stage];
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
+    <div className="max-w-3xl mx-auto px-6 py-8 md:py-12">
+      <div className="mb-6"><BackButton to="/" variant="ghost">Back to Home</BackButton></div>
       <div className="text-center mb-10">
         <span className="inline-flex items-center gap-2 rounded-full bg-card px-4 py-1.5 text-xs font-semibold text-muted-foreground shadow-[var(--shadow-card)]">
           <Clock className="h-3.5 w-3.5 text-primary" />
           Estimated arrival in {DELIVERY_MINUTES} minutes
         </span>
         <h1 className="mt-5 font-display text-4xl md:text-6xl font-black">Track Your Order</h1>
+        {confirmedOrder && (
+          <p className="mt-2 text-sm text-muted-foreground">Order #{confirmedOrder.orderNumber}</p>
+        )}
         <p className="mt-3 text-muted-foreground">Watch your scoop's journey to your doorstep.</p>
       </div>
 
