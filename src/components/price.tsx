@@ -1,5 +1,5 @@
 export function formatSAR(amount: number) {
-  return `${amount.toFixed(2)} ر.س`;
+  return `${amount.toFixed(2)} SAR`;
 }
 
 export function Price({ amount, className }: { amount: number; className?: string }) {
